@@ -17,7 +17,6 @@ const storage = firebase.storage();
 // === 2) UI elements ===
 const loginBar = document.getElementById('loginBar');
 const displayNameInput = document.getElementById('displayName');
-const familyCodeInput = document.getElementById('familyCode');
 const enterBtn = document.getElementById('enterBtn');
 
 const messagesEl = document.getElementById('messages');
@@ -26,10 +25,16 @@ const sendBtn = document.getElementById('sendBtn');
 const fileInput = document.getElementById('fileInput');
 const userInfo = document.getElementById('userInfo');
 const roomLabel = document.getElementById('roomLabel');
+const contactForm = document.getElementById('contactForm');
+const contactUidInput = document.getElementById('contactUid');
+const contactNameInput = document.getElementById('contactName');
+const contactsList = document.getElementById('contactsList');
 
 let currentRoom = null;
 let currentUser = null;
 let messagesRef = null;
+let contactsRef = null;
+let selectedContact = null;
 
 // === 3) Simple state & helpers ===
 function sanitize(s){ return (s || '').toString().trim(); }
@@ -78,8 +83,6 @@ function startRoom(roomCode){
   }
   currentRoom = 'rooms/' + roomCode + '/messages';
   messagesRef = db.ref(currentRoom).limitToLast(200);
-  roomLabel.textContent = 'Sala: ' + roomCode;
-
   messagesEl.innerHTML = '';
   messagesRef.on('child_added', (snap) => {
     const msg = snap.val() || {};
@@ -90,7 +93,7 @@ function startRoom(roomCode){
 
 async function sendText(){
   const text = sanitize(textInput.value);
-  if (!text) return;
+  if (!text || !currentRoom) return;
   textInput.value = '';
   const payload = {
     uid: currentUser ? currentUser.uid : null,
@@ -102,7 +105,7 @@ async function sendText(){
 }
 
 async function sendImage(file){
-  if (!file) return;
+  if (!file || !currentRoom) return;
   const name = localStorage.getItem('displayName') || 'Visitante';
   const uid = currentUser ? currentUser.uid : null;
   const ts = Date.now();
@@ -113,23 +116,68 @@ async function sendImage(file){
   await db.ref(currentRoom).push(payload);
 }
 
+// === Contacts management ===
+function listenContacts(){
+  if (!currentUser) return;
+  if (contactsRef) contactsRef.off();
+  contactsRef = db.ref(`users/${currentUser.uid}/contacts`);
+  contactsRef.on('value', (snap) => {
+    const data = snap.val() || {};
+    contactsList.innerHTML = '';
+    Object.entries(data).forEach(([uid, info]) => {
+      const li = document.createElement('li');
+      li.textContent = info.name || uid;
+      li.dataset.uid = uid;
+      li.className = 'contact' + (uid === selectedContact ? ' selected' : '');
+      li.addEventListener('click', () => selectContact(uid, info.name));
+      contactsList.appendChild(li);
+    });
+    if (!selectedContact){
+      const last = localStorage.getItem('lastContact');
+      if (last && data[last]){
+        selectContact(last, data[last].name);
+      }
+    }
+  });
+}
+
+function selectContact(uid, name){
+  selectedContact = uid;
+  document.querySelectorAll('#contactsList li').forEach(li => {
+    li.classList.toggle('selected', li.dataset.uid === uid);
+  });
+  const roomId = [currentUser.uid, uid].sort().join('_');
+  roomLabel.textContent = 'Contato: ' + (name || uid);
+  localStorage.setItem('lastContact', uid);
+  startRoom(roomId);
+}
+
+contactForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const uid = sanitize(contactUidInput.value);
+  const name = sanitize(contactNameInput.value);
+  if (!uid || !name || !currentUser) return;
+  await db.ref(`users/${currentUser.uid}/contacts/${uid}`).set({ name });
+  contactUidInput.value = '';
+  contactNameInput.value = '';
+});
+
 // === 4) Auth + Enter flow (anonymous) ===
 enterBtn.addEventListener('click', async () => {
   const name = sanitize(displayNameInput.value);
-  const code = sanitize(familyCodeInput.value).toUpperCase();
-  if (!name || !code){
-    alert('Informe seu nome e o código da família (ex: PORTILHO).');
+  if (!name){
+    alert('Informe seu nome.');
     return;
   }
   localStorage.setItem('displayName', name);
-  localStorage.setItem('familyCode', code);
 
   try{
     const cred = await auth.signInAnonymously();
     currentUser = cred.user;
+    await db.ref('users/' + currentUser.uid).update({ displayName: name });
     userInfo.textContent = name;
     loginBar.style.display = 'none';
-    startRoom(code);
+    listenContacts();
     textInput.focus();
   }catch(e){
     alert('Erro ao entrar: ' + e.message);
@@ -139,11 +187,10 @@ enterBtn.addEventListener('click', async () => {
 auth.onAuthStateChanged((u) => {
   currentUser = u;
   const savedName = localStorage.getItem('displayName');
-  const savedCode = localStorage.getItem('familyCode');
-  if (u && savedName && savedCode){
+  if (u && savedName){
     userInfo.textContent = savedName;
     loginBar.style.display = 'none';
-    startRoom(savedCode);
+    listenContacts();
   }
 });
 

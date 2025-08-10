@@ -42,6 +42,37 @@ main{
   margin:0 auto;
   padding:12px;
 }
+#contactsArea{
+  border-bottom:1px solid #e5e7eb;
+  padding-bottom:8px;
+  margin-bottom:8px;
+}
+#contactForm{
+  display:flex;
+  gap:8px;
+}
+#contactForm input{
+  padding:6px 8px;
+  border:1px solid #e5e7eb;
+  border-radius:8px;
+}
+#contactsList{
+  list-style:none;
+  margin:8px 0 0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.contact{
+  padding:6px 8px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.contact.selected{
+  background:var(--primary);
+  color:white;
+}
 #messages{
   flex:1; overflow:auto; display:flex; flex-direction:column; gap:10px;
   padding-bottom:8px;
