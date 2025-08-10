@@ -1,61 +1,64 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <title>Chat in</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="icon-192.png">
-  <link rel="stylesheet" href="styles.css">
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
-</head>
-<body>
-  <header>
-    <div class="title">
-      <img src="icon-192.png" alt="" width="28" height="28" style="border-radius:8px">
-      <div>
-        <div>Chat in</div>
-        <div class="room" id="roomLabel"></div>
-      </div>
-    </div>
-    <div class="small" id="userInfo"></div>
-  </header>
+@@ -8,54 +8,61 @@
+  < link rel = "apple-touch-icon" href = "icon-192.png" >  
+  < title > Bate-papo em </ title >
+  < link rel = "manifesto" href = "manifest.json" >  
+  < link rel = "ícone" href = "icon-192.png" >  
+  < link rel = "folha de estilo" href = "estilos.css" >  
+  <!-- SDKs do Firebase -->
+  < script src = "https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" > </ script > 
+  < script src = "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" > </ script > 
+  < script src = "https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js" > </ script > 
+  < script src = "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js" > </ script > 
+</head>​​
+< corpo >
+  < cabeçalho >
+    < div classe = "título" > 
+      < img src = "icon-192.png" alt = "" largura = "28" altura = "28" estilo = "border-radius:8px" >     
+      <div>​​
+        < div > Bate-papo em </ div >
+        < div classe = "sala" id = "roomLabel" > </ div >  
+      </div>​​
+    </div>​​
+    < div classe = "pequeno" id = "userInfo" > </ div >  
+  </ cabeçalho >
 
-  <div id="loginBar">
-    <input id="displayName" placeholder="Seu nome (ex: Júlia)" />
-    <input id="familyCode" placeholder="Código do Chat (ex: PORTILHO)" />
-    <button id="enterBtn">Entrar</button>
-  </div>
+  < div id = "barra de login" > 
+    < input id = "displayName" placeholder = "Seu nome (ex: Júlia)" />  
+    < input id = "familyCode" placeholder = "Código do Chat (ex: PORTILHO)" />  
+    < button id = "enterBtn" > Entrar </ button > 
+  </div>​​
 
-  <main>
-    <div id="messages"></div>
-  </main>
+  < principal >
+    < div id = "área de contatos" > 
+      < formulário id = "contactForm" > 
+        < input id = "contactUid" placeholder = "UID do contato" />  
+        <inputid="contactName"placeholder="Nome do contato" />  
+        <buttonid="addContactBtn">Adicionar</button> 
+      </form>​​
+      < ul id = "lista de contatos" > </ ul > 
+    </div>​​
+    < div id = "mensagens" > </ div > 
+  </ principal >
 
-  <footer>
-    <div class="form">
-      <label class="file-btn">
+  < rodapé >
+    < div class = "form" > 
+      < rótulo classe = "arquivo-btn" > 
         Foto
-        <input id="fileInput" type="file" accept="image/*" capture="environment">
-      </label>
-      <input id="textInput" type="text" placeholder="Escreva uma mensagem..." />
-      <button id="sendBtn">Enviar</button>
-    </div>
-  </footer>
+        < entrada id = "fileInput" tipo = "arquivo" aceitar = "imagem/*" captura = "ambiente" >    
+      </ rótulo >
+      <inputid="textInput"type="text"placeholder="Escreva uma mensagem..." />   
+      < button id = "sendBtn" > Enviar </ button > 
+    </div>​​
+  </ rodapé >
 
-  <script src="app.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js');
+  < script src = "app.js" > </ script > 
+  < script >
+    if ( 'serviceWorker' no navegador) {
+ 
+      janela . addEventListener ( 'carregar' , () => {
+        navegador. serviceWorker . registrar ( './service-worker.js' );
       });
     }
-  </script>
-</body>
-</html>
+  </ script >
+</ corpo >
+</ html >
