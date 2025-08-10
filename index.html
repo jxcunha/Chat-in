@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <title>Família Chat</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+</head>
+<body>
+  <header>
+    <div class="title">
+      <img src="icon-192.png" alt="" width="28" height="28" style="border-radius:8px">
+      <div>
+        <div>Família Chat</div>
+        <div class="room" id="roomLabel"></div>
+      </div>
+    </div>
+    <div class="small" id="userInfo"></div>
+  </header>
+
+  <div id="loginBar">
+    <input id="displayName" placeholder="Seu nome (ex: Júlia)" />
+    <input id="familyCode" placeholder="Código da família (ex: PORTILHO)" />
+    <button id="enterBtn">Entrar</button>
+  </div>
+
+  <main>
+    <div id="messages"></div>
+  </main>
+
+  <footer>
+    <div class="form">
+      <label class="file-btn">
+        Foto
+        <input id="fileInput" type="file" accept="image/*" capture="environment">
+      </label>
+      <input id="textInput" type="text" placeholder="Escreva uma mensagem..." />
+      <button id="sendBtn">Enviar</button>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js');
+      });
+    }
+  </script>
+</body>
+</html>
