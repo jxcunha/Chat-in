@@ -1,94 +1,93 @@
-:root{
-  --bg:#f7f9fc;
-  --primary:#2196f3;
-  --text:#0f172a;
-  --muted:#64748b;
-  --bubbleYou:#dcfce7;
-  --bubbleOther:#ffffff;
+cabeçalho {
+  fundo : var (--primário);
+  cor : branco;
+  preenchimento : 12px 16px ;
+ 
+  exibição :flex;
+  alinhar-itens :centro;
+  justificar-conteúdo :espaço-entre;
+  posição :fixo; topo : 0 ; índice z : 10 ;
+  caixa-sombra : 0 2px 8px rgba ( 0 , 0 , 0 ,. 1 );
+   
 }
-*{box-sizing:border-box}
-html,body{
-  height:100%;
+cabeçalho .title {
+ 
+  exibição :flex; lacuna : 8px ; itens de alinhamento :centro;
+  espessura da fonte : 700 ;
 }
-body{
-  margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  display:flex; flex-direction:column;
+cabeçalho .room {
+ 
+  tamanho da fonte : . 85rem ; cor : #e3f2fd ;
 }
-header{
-  background:var(--primary);
-  color:white;
-  padding:12px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  position:sticky; top:0; z-index:10;
-  box-shadow:0 2px 8px rgba(0,0,0,.1);
+principal {
+  flexão : 1 ;
+  exibição :flex; direção flexível :coluna;
+  lacuna : 8px ;
+  largura máxima : 900px ; largura : 100% ;
+  margem : 0 auto;
+  preenchimento : 12px ;
 }
-header .title{
-  display:flex; gap:8px; align-items:center;
-  font-weight:700;
+#áreaDeContatos {
+  borda inferior : 1px sólido #e5e7eb ;
+  preenchimento inferior : 8px ;
+  margem inferior : 8px ;
 }
-header .room{
-  font-size:.85rem; color:#e3f2fd;
+#formulário de contato {
+  exibição :flex;
+  lacuna : 8px ;
 }
-main{
-  flex:1;
-  display:flex; flex-direction:column;
-  gap:8px;
-  max-width:900px; width:100%;
-  margin:0 auto;
-  padding:12px;
+#entrada do formulário de contato {
+ 
+  preenchimento : 6px 8px ;
+ 
+  borda : 1px sólido #e5e7eb ;
+  raio da borda : 8px ;
 }
-#messages{
-  flex:1; overflow:auto; display:flex; flex-direction:column; gap:10px;
-  padding-bottom:8px;
+#ListaDeContatos {
+  estilo de lista : nenhum;
+  margem : 8px 0 0 ;
+  
+  preenchimento : 0 ;
+  exibição :flex;
+  flex-direction :coluna;
+  lacuna : 4px ;
 }
-.msg{
-  display:flex; flex-direction:column; max-width:75%;
+.contato {
+  preenchimento : 6px 8px ;
+ 
+  raio da borda : 8px ;
+  cursor :ponteiro;
 }
-.me{ align-self:flex-end; }
-.other{ align-self:flex-start; }
-.bubble{
-  border-radius:14px; padding:10px 12px; background:var(--bubbleOther);
-  box-shadow:0 2px 6px rgba(0,0,0,.05);
+.contato .selecionado {
+  fundo : var (--primário);
+  cor : branco;
 }
-.me .bubble{ background:var(--bubbleYou); }
-.meta{
-  font-size:.72rem; color:var(--muted); margin-top:4px;
+#mensagens {
+  flex : 1 ; estouro :automático; exibição :flex; direção flexível :coluna; lacuna : 10px ;
+  preenchimento inferior : 8px ;
 }
-img.chat-image{
-  max-width:260px; border-radius:12px; display:block;
+.msg {
+  mostrar:flex; direção flexível :coluna; largura máxima : 75% ;
 }
-footer{
-  position:sticky; bottom:0; background:rgba(255,255,255,.9);
-  backdrop-filter: blur(6px); padding:8px 12px;
-  box-shadow:0 -2px 8px rgba(0,0,0,.05);
+.meu{ alinhar-self :flex-end;}
+.outro{ alinhar-self :flex-start;}
+.bolha{
+  raio da borda : 14px ; preenchimento : 10px 12px ; plano de fundo : var (--bubbleOther);
+  caixa-sombra : 0 2px 6px rgba ( 0 , 0 , 0 ,. 05 );
+   
 }
-.form{
-  display:flex; gap:8px; align-items:center; max-width:900px; margin:0 auto;
+.eu .bubble { fundo : var (--bubbleYou); }
+ 
+.meta {
+  tamanho da fonte : 72rem ; cor : var (--muted); margem superior : 4px ;
 }
-.form input[type=text]{
-  flex:1; padding:12px 14px; border:1px solid #e5e7eb; border-radius:12px;
-  outline:none; font-size:1rem; background:white;
+img .chat-image {
+  largura máxima : 260px ; raio da borda : 12px ; exibição : bloco;
 }
-button, .file-btn{
-  background:var(--primary); color:white; border:none; border-radius:12px;
-  padding:10px 14px; font-weight:600; cursor:pointer;
-}
-.file-btn{ position:relative; overflow:hidden; }
-.file-btn input[type=file]{
-  position:absolute; inset:0; opacity:0; cursor:pointer;
-}
-#loginBar{
-  background:#fff; border-bottom:1px solid #e5e7eb; padding:8px 12px;
-  display:flex; gap:8px; align-items:center; justify-content:center;
-}
-#loginBar input{
-  padding:8px 10px; border:1px solid #e5e7eb; border-radius:10px;
-}
-.small{
-  font-size:.85rem; color:var(--muted);
+rodapé {
+  posição : fixo; fundo : 0 ; fundo : rgba ( 255 , 255 , 255 ,. 9 );
+  filtro de pano de fundo : desfoque ( 6px ); preenchimento : 8px 12px ;
+ 
+  caixa-sombra : 0 - 2px 8px rgba ( 0 , 0 , 0 ,. 05 );
+  
 }
