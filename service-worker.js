@@ -1,6 +1,6 @@
 self.addEventListener("install", (e) => {
   e.waitUntil(
-    caches.open("family-chat-v1").then((cache) => cache.addAll([
+    caches.open("chat-in-v2").then((cache) => cache.addAll([
       "./",
       "./index.html",
       "./app.js",
@@ -11,6 +11,7 @@ self.addEventListener("install", (e) => {
     ]))
   );
 });
+
 self.addEventListener("fetch", (e) => {
   e.respondWith(
     caches.match(e.request).then((response) => response || fetch(e.request))
