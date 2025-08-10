@@ -30,11 +30,18 @@
 
   <div id="loginBar">
     <input id="displayName" placeholder="Seu nome (ex: Júlia)" />
-    <input id="familyCode" placeholder="Código do Chat (ex: PORTILHO)" />
     <button id="enterBtn">Entrar</button>
   </div>
 
   <main>
+    <div id="contactsArea">
+      <form id="contactForm">
+        <input id="contactUid" placeholder="UID do contato" />
+        <input id="contactName" placeholder="Nome do contato" />
+        <button id="addContactBtn">Adicionar</button>
+      </form>
+      <ul id="contactsList"></ul>
+    </div>
     <div id="messages"></div>
   </main>
 
